@@ -1,0 +1,38 @@
+﻿@model Projectmc.Models.pharmacy
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+@using (Html.BeginForm())
+{
+    <div>
+        <label>Pharmacy Name</label>
+        <div>
+            @Html.EditorFor(m => Model.PharmacyName)
+        </div>
+    </div>
+    <div>
+        <label>Pharmacy Address</label>
+        <div>
+            @Html.EditorFor(m => Model.PharmacyAddress)
+        </div>
+    </div>
+    <div>
+        <label>Manager</label>
+        <div>
+            @Html.EditorFor(m => Model.Manager)
+        </div>
+    </div>
+    <div>
+        <label>Drug Name</label>
+        <div>
+            @Html.DropDownList("DrugId", null, new { @class = "form-control" })
+        </div>
+    </div>
+    <div>
+        <input type="submit" value="Update" />
+    </div>
+}
+

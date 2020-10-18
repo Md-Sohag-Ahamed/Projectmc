@@ -1,0 +1,25 @@
+﻿@model Projectmc.Models.customer
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+<dl>
+    <dt>Customer Name</dt>
+    <dd>@Html.DisplayFor(m=>Model.CustomerName)</dd>
+</dl>
+<dl>
+    <dt>Customer Address</dt>
+    <dd>@Html.DisplayFor(m => Model.CustomerAddress)</dd>
+</dl>
+<dl>
+    <dt>Customer Phone</dt>
+    <dd>@Html.DisplayFor(m => Model.CustomerPhone)</dd>
+</dl>
+<dl>
+    <dt>Customer Name</dt>
+    <dd>@Html.DisplayFor(m => Model.Drug.DrugName)</dd>
+</dl>
+@Html.ActionLink("Back to Index","Index","Customer")
+

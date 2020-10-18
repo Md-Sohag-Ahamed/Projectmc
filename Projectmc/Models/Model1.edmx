@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="pharmacyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="customerId" />
+          </Key>
+          <Property Name="customerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerName" Type="varchar" MaxLength="30" />
+          <Property Name="CustomerAddress" Type="varchar" MaxLength="150" />
+          <Property Name="CustomerPhone" Type="nvarchar" MaxLength="15" />
+          <Property Name="DrugId" Type="int" />
+        </EntityType>
+        <EntityType Name="Drug">
+          <Key>
+            <PropertyRef Name="DrugId" />
+          </Key>
+          <Property Name="DrugId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DrugName" Type="varchar" MaxLength="30" />
+          <Property Name="Describtion" Type="varchar" MaxLength="50" />
+          <Property Name="Price" Type="money" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'pharmacy.dbo.Login' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="UserPassword" />
+          </Key>
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserPassword" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="pharmacy">
+          <Key>
+            <PropertyRef Name="PharmacyId" />
+          </Key>
+          <Property Name="PharmacyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PharmacyName" Type="varchar" MaxLength="50" />
+          <Property Name="PharmacyAddress" Type="varchar" MaxLength="150" />
+          <Property Name="Manager" Type="varchar" MaxLength="30" />
+          <Property Name="DrugId" Type="int" />
+        </EntityType>
+        <Association Name="FK__customer__DrugId__25869641">
+          <End Role="Drug" Type="Self.Drug" Multiplicity="0..1" />
+          <End Role="customer" Type="Self.customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drug">
+              <PropertyRef Name="DrugId" />
+            </Principal>
+            <Dependent Role="customer">
+              <PropertyRef Name="DrugId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__pharmacy__DrugId__286302EC">
+          <End Role="Drug" Type="Self.Drug" Multiplicity="0..1" />
+          <End Role="pharmacy" Type="Self.pharmacy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drug">
+              <PropertyRef Name="DrugId" />
+            </Principal>
+            <Dependent Role="pharmacy">
+              <PropertyRef Name="DrugId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="pharmacyModelStoreContainer">
+          <EntitySet Name="customer" EntityType="Self.customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Drug" EntityType="Self.Drug" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pharmacy" EntityType="Self.pharmacy" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Login" EntityType="Self.Login" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Login].[UserName] AS [UserName], 
+    [Login].[UserPassword] AS [UserPassword]
+    FROM [dbo].[Login] AS [Login]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__customer__DrugId__25869641" Association="Self.FK__customer__DrugId__25869641">
+            <End Role="Drug" EntitySet="Drug" />
+            <End Role="customer" EntitySet="customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__pharmacy__DrugId__286302EC" Association="Self.FK__pharmacy__DrugId__286302EC">
+            <End Role="Drug" EntitySet="Drug" />
+            <End Role="pharmacy" EntitySet="pharmacy" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="pharmacyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="customerId" />
+          </Key>
+          <Property Name="customerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerAddress" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerPhone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="DrugId" Type="Int32" />
+          <NavigationProperty Name="Drug" Relationship="Self.FK__customer__DrugId__25869641" FromRole="customer" ToRole="Drug" />
+        </EntityType>
+        <EntityType Name="Drug">
+          <Key>
+            <PropertyRef Name="DrugId" />
+          </Key>
+          <Property Name="DrugId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DrugName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Describtion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="customers" Relationship="Self.FK__customer__DrugId__25869641" FromRole="Drug" ToRole="customer" />
+          <NavigationProperty Name="pharmacies" Relationship="Self.FK__pharmacy__DrugId__286302EC" FromRole="Drug" ToRole="pharmacy" />
+        </EntityType>
+        <EntityType Name="pharmacy">
+          <Key>
+            <PropertyRef Name="PharmacyId" />
+          </Key>
+          <Property Name="PharmacyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PharmacyName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PharmacyAddress" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Manager" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DrugId" Type="Int32" />
+          <NavigationProperty Name="Drug" Relationship="Self.FK__pharmacy__DrugId__286302EC" FromRole="pharmacy" ToRole="Drug" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="UserName" />
+            <PropertyRef Name="UserPassword" />
+          </Key>
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__customer__DrugId__25869641">
+          <End Role="Drug" Type="Self.Drug" Multiplicity="0..1" />
+          <End Role="customer" Type="Self.customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drug">
+              <PropertyRef Name="DrugId" />
+            </Principal>
+            <Dependent Role="customer">
+              <PropertyRef Name="DrugId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__pharmacy__DrugId__286302EC">
+          <End Role="Drug" Type="Self.Drug" Multiplicity="0..1" />
+          <End Role="pharmacy" Type="Self.pharmacy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Drug">
+              <PropertyRef Name="DrugId" />
+            </Principal>
+            <Dependent Role="pharmacy">
+              <PropertyRef Name="DrugId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="pharmacyEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="customers" EntityType="Self.customer" />
+          <EntitySet Name="Drugs" EntityType="Self.Drug" />
+          <EntitySet Name="pharmacies" EntityType="Self.pharmacy" />
+          <EntitySet Name="Logins" EntityType="Self.Login" />
+          <AssociationSet Name="FK__customer__DrugId__25869641" Association="Self.FK__customer__DrugId__25869641">
+            <End Role="Drug" EntitySet="Drugs" />
+            <End Role="customer" EntitySet="customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__pharmacy__DrugId__286302EC" Association="Self.FK__pharmacy__DrugId__286302EC">
+            <End Role="Drug" EntitySet="Drugs" />
+            <End Role="pharmacy" EntitySet="pharmacies" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="pharmacyModelStoreContainer" CdmEntityContainer="pharmacyEntities">
+          <EntitySetMapping Name="customers">
+            <EntityTypeMapping TypeName="pharmacyModel.customer">
+              <MappingFragment StoreEntitySet="customer">
+                <ScalarProperty Name="customerId" ColumnName="customerId" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerAddress" ColumnName="CustomerAddress" />
+                <ScalarProperty Name="CustomerPhone" ColumnName="CustomerPhone" />
+                <ScalarProperty Name="DrugId" ColumnName="DrugId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Drugs">
+            <EntityTypeMapping TypeName="pharmacyModel.Drug">
+              <MappingFragment StoreEntitySet="Drug">
+                <ScalarProperty Name="DrugId" ColumnName="DrugId" />
+                <ScalarProperty Name="DrugName" ColumnName="DrugName" />
+                <ScalarProperty Name="Describtion" ColumnName="Describtion" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pharmacies">
+            <EntityTypeMapping TypeName="pharmacyModel.pharmacy">
+              <MappingFragment StoreEntitySet="pharmacy">
+                <ScalarProperty Name="PharmacyId" ColumnName="PharmacyId" />
+                <ScalarProperty Name="PharmacyName" ColumnName="PharmacyName" />
+                <ScalarProperty Name="PharmacyAddress" ColumnName="PharmacyAddress" />
+                <ScalarProperty Name="Manager" ColumnName="Manager" />
+                <ScalarProperty Name="DrugId" ColumnName="DrugId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logins">
+            <EntityTypeMapping TypeName="pharmacyModel.Login">
+              <MappingFragment StoreEntitySet="Login">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

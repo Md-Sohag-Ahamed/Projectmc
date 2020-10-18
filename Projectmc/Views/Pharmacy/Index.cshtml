@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Projectmc.Models.pharmacy>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+@Html.ActionLink("Create", "Create", "Pharmacy")
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered">
+            <tr>
+
+                <th>@Html.DisplayNameFor(model => model.PharmacyName)</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PharmacyAddress)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Manager)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Drug.DrugName)
+                </th>
+                <th>.....</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.PharmacyName</td>
+                    <td>@item.PharmacyAddress</td>
+                    <td>@item.Manager</td>
+                    <td>@item.Drug.DrugName</td>
+
+                    <td>
+                        @Html.ActionLink("Details", "Details", "Pharmacy", new { id = item.PharmacyId }, null)||
+                        @Html.ActionLink("Edit", "Edit", "Pharmacy", new { id = item.PharmacyId }, null)||
+                        @Html.ActionLink("Delete", "Delete", "Pharmacy", new { id = item.PharmacyId }, null)
+                    </td>
+
+                </tr>
+
+            }
+        </table>
+    </div>
+</div>
+

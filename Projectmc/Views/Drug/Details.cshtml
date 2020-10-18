@@ -1,0 +1,21 @@
+﻿@model Projectmc.Models.Drug
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+<dl>
+    <dt>Drug Name</dt>
+    <dd>@Html.DisplayFor(m=>Model.DrugName)</dd>
+</dl>
+<dl>
+    <dt>Description</dt>
+    <dd>@Html.DisplayFor(m=>Model.Describtion)</dd>
+</dl>
+<dl>
+    <dt>Price</dt>
+    <dd>@Html.DisplayFor(m => Model.Price)</dd>
+</dl>
+@Html.ActionLink("Back to Index","Index","Home")
+

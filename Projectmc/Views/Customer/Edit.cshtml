@@ -1,0 +1,37 @@
+﻿@model Projectmc.Models.customer
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+@using (Html.BeginForm())
+{
+    <div>
+        <label>Customer Name</label>
+        <div>
+            @Html.EditorFor(m => Model.CustomerName)
+        </div>
+    </div>
+    <div>
+        <label>Customer Address</label>
+        <div>
+            @Html.EditorFor(m => Model.CustomerAddress)
+        </div>
+    </div>
+    <div>
+        <label>Customer Phone</label>
+        <div>
+            @Html.EditorFor(m => Model.CustomerPhone)
+        </div>
+    </div>
+    <div>
+        <label>Drug Name</label>
+        <div>
+          @Html.DropDownList("DrugId", null, new { @class="form-control"})
+        </div>
+    </div>
+    <div>
+        <input type="submit" value="Update" />
+    </div>
+}
